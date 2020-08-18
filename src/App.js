@@ -1,8 +1,11 @@
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 
-import { Root, Header, Body } from './container/styledComponent';
+import { Root, Header } from './container/styledComponent';
 import { fetchMovieData } from './modules/movieData';
+import MovieList from './container/MovieList';
+
+import 'antd/dist/antd.css';
 
 function App() {
   const dispatch = useDispatch();
@@ -15,7 +18,7 @@ function App() {
   return (
     <Root>
       <Header>Movie Review App</Header>
-      <Body>Body</Body>
+      <MovieList />
     </Root>
   );
 }

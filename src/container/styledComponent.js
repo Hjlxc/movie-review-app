@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 
 const HEADER_HEIGHT = 50;
-const BODY_PADDING = 15;
 
 const Wrapper = styled.div`
   width: 100%;
@@ -17,6 +16,7 @@ export const CenteredWrapper = styled(Wrapper)`
 export const Root = styled(Wrapper)`
   text-align: center;
   position: relative;
+  overflow: hidden;
 `;
 
 export const Header = styled(CenteredWrapper)`
@@ -29,8 +29,24 @@ export const Header = styled(CenteredWrapper)`
 export const Body = styled(Wrapper)`
   margin-top: ${HEADER_HEIGHT}px;
   top: 0px;
-  height: calc(100% - ${HEADER_HEIGHT + BODY_PADDING * 2}px);
-  width: calc(100% - ${BODY_PADDING * 2}px);
-  padding: ${BODY_PADDING}px;
+  height: calc(100% - ${HEADER_HEIGHT}px);
+  width: 100%;
+  padding: 15px;
   position: absolute;
+  overflow-x: auto;
+`;
+
+export const MovieItemWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 20px;
+`;
+
+export const MovieItemSwatch = styled.img`
+  width: 100%;
+  padding-bottom: 10px;
+`;
+
+export const MovieItemTitle = styled.div`
+  font-weight: 700;
 `;
