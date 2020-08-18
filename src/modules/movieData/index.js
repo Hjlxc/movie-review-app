@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-import { MOVIE_DB_ENDPOINT, MOVIE_DB_API_KEY } from '../../constants';
+import { fetchMoveFromDB } from './utils';
 
 export const movieDataSlice = createSlice({
   name: 'movieData',
@@ -16,9 +16,8 @@ const { setMovieData } = movieDataSlice.actions;
 
 export const fetchMovieData = () => async (dispatch) => {
   try {
-    const data = await fetch(
-      `${MOVIE_DB_ENDPOINT}?api_key=${MOVIE_DB_API_KEY}`
-    ).then((res) => res.json());
+    // fetch and update movie data state
+    const data = await fetchMoveFromDB();
     dispatch(setMovieData(data.results));
   } catch (e) {
     // handle fetch error, such as retry, etc
