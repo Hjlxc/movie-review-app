@@ -1,24 +1,39 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { useSelector } from 'react-redux';
-import { List } from 'antd';
+import { useSelector, useDispatch } from 'react-redux';
+import { List, Spin } from 'antd';
+import InfiniteScroll from 'react-infinite-scroller';
 
-import { Body } from './styledComponent';
-import { selectMovieData } from '../modules/movieData';
+import {
+  Body,
+  HorizontalFlexWrapper,
+  CenteredWrapper,
+} from './styledComponent';
+import {
+  selectMovieData,
+  fetchMovieData,
+  selectHasMoreData,
+} from '../modules/movieData';
 import MovieItem from '../component/MovieItem';
 import MovieModal from '../component/MovieModal';
 import { POSTER_PREFIX } from '../constants';
 
 export default function MovieList() {
+  const bodyRef = useRef(null);
+
+  const [width, setWidth] = useState(0);
+  const [modalItem, setModalItem] = useState(null);
+  const [hasMore, setHasMore] = useState(true);
+
+  // get movieList from redux store
+  const movieList = useSelector(selectMovieData);
+  const hasMoreData = useSelector(selectHasMoreData);
+  const dispatch = useDispatch();
+
   // window resize handler
   const handleResize = () => {
     if (!bodyRef.current) return;
     setWidth(bodyRef.current.offsetWidth);
   };
-
-  const bodyRef = useRef(null);
-
-  const [width, setWidth] = useState(0);
-  const [modalItem, setModalItem] = useState(null);
 
   useEffect(
     () => {
@@ -34,8 +49,12 @@ export default function MovieList() {
     [bodyRef.current]
   );
 
-  // get movieList from redux store
-  const movieList = useSelector(selectMovieData);
+  useEffect(
+    () => {
+      setHasMore(hasMoreData);
+    },
+    [movieList]
+  );
 
   const renderMovieItem = (item) => (
     <List.Item>
@@ -47,17 +66,42 @@ export default function MovieList() {
       />
     </List.Item>
   );
+
+  const handleInfiniteOnLoad = (loadingPage) =>
+    dispatch(fetchMovieData({ page: loadingPage + 1 }));
+
+  const loader = (
+    <CenteredWrapper>
+      <HorizontalFlexWrapper>
+        <Spin style={{ marginRight: '20px' }} />
+        {'loading'}
+      </HorizontalFlexWrapper>
+    </CenteredWrapper>
+  );
+
   return (
     <Body ref={bodyRef}>
-      <List
-        loading={!movieList.length}
-        dataSource={movieList}
-        renderItem={renderMovieItem}
-        grid={{
-          gutter: 10,
-          column: getGripColumn(width),
-        }}
-      />
+      <InfiniteScroll
+        initialLoad={false}
+        pageStart={0}
+        loadMore={handleInfiniteOnLoad}
+        useWindow={false}
+        hasMore={hasMore}
+        loader={loader}
+      >
+        {movieList.length ? (
+          <List
+            dataSource={movieList}
+            renderItem={renderMovieItem}
+            grid={{
+              gutter: 10,
+              column: getGripColumn(width),
+            }}
+          />
+        ) : (
+          <div />
+        )}
+      </InfiniteScroll>
       <MovieModal
         visible={!!modalItem}
         {...parseItemData(modalItem || {})}

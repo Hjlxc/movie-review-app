@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { createSelector } from 'reselect';
 
 import { fetchMovieFromDB } from './utils';
 
@@ -14,6 +15,7 @@ export const movieDataSlice = createSlice({
 
 const { setMovieData } = movieDataSlice.actions;
 
+/* Actions */
 // fetch the data of a given page, if provided
 export const fetchMovieData = (options = {}) => async (dispatch, getState) => {
   const { movieData } = getState();
@@ -28,24 +30,44 @@ export const fetchMovieData = (options = {}) => async (dispatch, getState) => {
   }
 };
 
+/* Selectors */
+
+/* default selector should return the state directly without any logic
+it is used to get raw data from redux store and should only use internally */
+const getRawMovieData = (state) => state.movieData;
+
+/* wrappered selector with logic using reselect that export and used by the app
+the reselect library will cache the result unless related store changes */
+
 // retrive the existing movie data from state and return it in order
-export const selectMovieData = ({ movieData }) =>
+export const selectMovieData = createSelector(getRawMovieData, (movieData) =>
   movieData
     .filter((item) => !!item)
     .map((item) => item.results)
-    .flat();
+    .flat()
+);
 
 // finding the first page that has not being fetched
 // searching from page 1
-export const getFirstUnfetchedPage = ({ movieData }) => {
-  let pageIdx = 0;
+export const selectFirstUnfetchedPage = createSelector(
+  getRawMovieData,
+  (movieData) => {
+    let pageIdx = 0;
+    // break the loop when encounter a null or undefined data
+    // then increase the idx by one, this increase will compensate the
+    // offset between page idx and array idx
+    while (movieData[pageIdx++]) {}
 
-  // break the loop when encounter a null or undefined data
-  // then increase the idx by one, this increase will compensate the
-  // offset between page idx and array idx
-  while (movieData[pageIdx++]) {}
+    return pageIdx;
+  }
+);
 
-  return pageIdx;
-};
+// return false if all movieData has being fetched, otherwise, true
+export const selectHasMoreData = createSelector(
+  getRawMovieData,
+  selectFirstUnfetchedPage,
+  (movieData, unfetchedPage) =>
+    !movieData.length || unfetchedPage <= movieData[0].total_pages
+);
 
 export default movieDataSlice.reducer;
