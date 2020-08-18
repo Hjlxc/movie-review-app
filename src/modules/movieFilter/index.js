@@ -113,6 +113,6 @@ export const selectMovieVoting = (state) => state.movieFilter.voting;
 
 export const selectMovieAdult = (state) => state.movieFilter.adult;
 
-export const selectSearch = (state) => state.movieFilter.search;
+export const selectMovieSearch = (state) => state.movieFilter.search;
 
 export default movieFilterSlice.reducer;
