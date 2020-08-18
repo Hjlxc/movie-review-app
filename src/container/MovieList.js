@@ -8,11 +8,8 @@ import {
   HorizontalFlexWrapper,
   CenteredWrapper,
 } from './styledComponent';
-import {
-  selectMovieData,
-  fetchMovieData,
-  selectHasMoreData,
-} from '../modules/movieData';
+import { fetchMovieData, selectHasMoreData } from '../modules/movieData';
+import { selectFilteredMovie } from '../modules/movieFilter';
 import MovieItem from '../component/MovieItem';
 import MovieModal from '../component/MovieModal';
 import { POSTER_PREFIX } from '../constants';
@@ -25,7 +22,7 @@ export default function MovieList() {
   const [hasMore, setHasMore] = useState(true);
 
   // get movieList from redux store
-  const movieList = useSelector(selectMovieData);
+  const movieList = useSelector(selectFilteredMovie);
   const hasMoreData = useSelector(selectHasMoreData);
   const dispatch = useDispatch();
 
