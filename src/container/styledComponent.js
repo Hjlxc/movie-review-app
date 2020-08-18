@@ -25,6 +25,11 @@ export const CenteredWrapper = styled(Wrapper)`
 export const TextWrapper = styled.div`
   padding-bottom: 5px;
 `;
+
+export const Gap = styled.div`
+  padding-right: ${(props) => props.width || 10}px;
+  padding-bottom: ${(props) => props.height || 10}px;
+`;
 export const BoldWrapper = styled(TextWrapper)`
   font-weight: 700;
 `;

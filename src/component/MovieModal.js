@@ -7,6 +7,7 @@ import {
   VerticalFlexWrapper,
   BoldWrapper,
   TextWrapper,
+  Gap,
 } from '../container/styledComponent';
 
 export default function MovieModal({
@@ -33,7 +34,7 @@ export default function MovieModal({
         <VerticalFlexWrapper>
           <HorizontalFlexWrapper>
             <TextWrapper>{release_date}</TextWrapper>
-            <TextWrapper style={{ paddingRight: '10px' }} />
+            <Gap />
             <TextWrapper>{`Language: ${original_language}`}</TextWrapper>
           </HorizontalFlexWrapper>
           <div>
