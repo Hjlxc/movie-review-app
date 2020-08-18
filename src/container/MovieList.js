@@ -10,8 +10,7 @@ import {
 } from './styledComponent';
 import { fetchMovieData, selectHasMoreData } from '../modules/movieData';
 import { selectFilteredMovie } from '../modules/movieFilter';
-import MovieItem from '../component/MovieItem';
-import MovieModal from '../component/MovieModal';
+import { MovieItem, MovieModal } from '../component';
 import { POSTER_PREFIX } from '../constants';
 
 export default function MovieList() {

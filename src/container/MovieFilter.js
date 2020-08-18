@@ -10,8 +10,10 @@ import {
   selectLanguageOption,
   selectMovieLanguage,
 } from '../modules/movieFilter';
-import VotingFilter from '../component/Slider';
-import LanguageFilter from '../component/CheckboxGroup';
+import {
+  CheckboxGroup as LanguageFilter,
+  Slider as VotingFilter,
+} from '../component';
 
 export default function MovieFilter() {
   const dispatch = useDispatch();
