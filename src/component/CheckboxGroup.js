@@ -1,12 +1,11 @@
 import React from 'react';
 import { Checkbox } from 'antd';
 
-import { VerticalFlexWrapper, BoldWrapper } from '../container/styledComponent';
+import { VerticalFlexWrapper } from '../container/styledComponent';
 
-export default function({ title, options, checked, onOptionClick }) {
+export default function({ options, checked, onOptionClick }) {
   return (
     <VerticalFlexWrapper>
-      {title && <BoldWrapper>{title}</BoldWrapper>}
       {options.map((option) => (
         <div key={option}>
           <Checkbox

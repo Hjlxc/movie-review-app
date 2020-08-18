@@ -14,6 +14,7 @@ import {
   CheckboxGroup as LanguageFilter,
   Slider as VotingFilter,
 } from '../component';
+import TitleWrapper from './TitleWrapper';
 
 export default function MovieFilter() {
   const dispatch = useDispatch();
@@ -29,17 +30,16 @@ export default function MovieFilter() {
 
   return (
     <VerticalFlexWrapper>
-      <VotingFilter
-        title="Voting"
-        {...voting}
-        onChange={onVotingFilterChange}
-      />
-      <LanguageFilter
-        title="Language"
-        options={languageOptions}
-        checked={language}
-        onOptionClick={onLanguageFilterChange}
-      />
+      <TitleWrapper title="Voting">
+        <VotingFilter {...voting} onChange={onVotingFilterChange} />
+      </TitleWrapper>
+      <TitleWrapper title="Language">
+        <LanguageFilter
+          options={languageOptions}
+          checked={language}
+          onOptionClick={onLanguageFilterChange}
+        />
+      </TitleWrapper>
     </VerticalFlexWrapper>
   );
 }
