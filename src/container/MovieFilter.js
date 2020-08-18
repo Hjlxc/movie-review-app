@@ -10,8 +10,8 @@ import {
   selectLanguageOption,
   selectMovieLanguage,
 } from '../modules/movieFilter';
-import VotingFilter from '../component/VotingFilter';
-import LanguageFilter from '../component/LanguageFilter';
+import VotingFilter from '../component/Slider';
+import LanguageFilter from '../component/CheckboxGroup';
 
 export default function MovieFilter() {
   const dispatch = useDispatch();
@@ -27,8 +27,13 @@ export default function MovieFilter() {
 
   return (
     <VerticalFlexWrapper>
-      <VotingFilter {...voting} onChange={onVotingFilterChange} />
+      <VotingFilter
+        title="Voting"
+        {...voting}
+        onChange={onVotingFilterChange}
+      />
       <LanguageFilter
+        title="Language"
         options={languageOptions}
         checked={language}
         onOptionClick={onLanguageFilterChange}

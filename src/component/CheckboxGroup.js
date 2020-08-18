@@ -3,10 +3,10 @@ import { Checkbox } from 'antd';
 
 import { VerticalFlexWrapper, BoldWrapper } from '../container/styledComponent';
 
-export default function({ options, checked, onOptionClick }) {
+export default function({ title, options, checked, onOptionClick }) {
   return (
     <VerticalFlexWrapper>
-      <BoldWrapper>Language</BoldWrapper>
+      {title && <BoldWrapper>{title}</BoldWrapper>}
       {options.map((option) => (
         <div key={option}>
           <Checkbox

@@ -3,10 +3,10 @@ import { Slider } from 'antd';
 
 import { VerticalFlexWrapper, BoldWrapper } from '../container/styledComponent';
 
-export default function({ min, max, selectMin, selectMax, onChange }) {
+export default function({ title, min, max, selectMin, selectMax, onChange }) {
   return (
     <VerticalFlexWrapper>
-      <BoldWrapper>Voting</BoldWrapper>
+      {title && <BoldWrapper>{title}</BoldWrapper>}
       <Slider
         min={min}
         max={max}
