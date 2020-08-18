@@ -1,10 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
-import { List, Avatar } from 'antd';
+import { List } from 'antd';
 
 import { Body } from './styledComponent';
 import { selectMovieData } from '../modules/movieData';
 import MovieItem from '../component/MovieItem';
+import MovieModal from '../component/MovieModal';
 import { POSTER_PREFIX } from '../constants';
 
 export default function MovieList() {
@@ -17,6 +18,8 @@ export default function MovieList() {
   const bodyRef = useRef(null);
 
   const [width, setWidth] = useState(0);
+  const [modalItem, setModalItem] = useState(null);
+
   useEffect(
     () => {
       // initial and update width property to dymanically update grid
@@ -37,9 +40,10 @@ export default function MovieList() {
   const renderMovieItem = (item) => (
     <List.Item>
       <MovieItem
-        swatch={`${POSTER_PREFIX}${item.poster_path}`}
-        title={item.title}
-        rating={item.vote_average / 2}
+        {...parseItemData(item)}
+        onClick={() => {
+          setModalItem(item);
+        }}
       />
     </List.Item>
   );
@@ -54,8 +58,20 @@ export default function MovieList() {
           column: getGripColumn(width),
         }}
       />
+      <MovieModal
+        visible={!!modalItem}
+        {...parseItemData(modalItem || {})}
+        onClose={() => setModalItem(null)}
+      />
     </Body>
   );
 }
-
+// get gripColumn based on current window width, min item width is 200
 const getGripColumn = (width) => Math.max(Math.floor(width / 200), 1);
+
+// parse the item data to include swatch url and rating based on 5
+const parseItemData = (item) => ({
+  ...item,
+  rating: item.vote_average / 2,
+  swatch: `${POSTER_PREFIX}${item.poster_path}`,
+});

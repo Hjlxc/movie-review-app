@@ -5,14 +5,14 @@ import { Rate } from 'antd';
 import {
   MovieItemWrapper,
   MovieItemSwatch,
-  MovieItemTitle,
+  BoldWrapper,
 } from '../container/styledComponent';
 
-export default function MovieItem({ swatch, title, rating }) {
+export default function MovieItem({ swatch, title, rating, onClick }) {
   return (
     <MovieItemWrapper>
-      <MovieItemSwatch src={swatch} />
-      <MovieItemTitle>{title}</MovieItemTitle>
+      <MovieItemSwatch src={swatch} onClick={onClick} />
+      <BoldWrapper>{title}</BoldWrapper>
       <Rate allowHalf disabled defaultValue={rating} />
     </MovieItemWrapper>
   );
