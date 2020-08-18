@@ -4,6 +4,7 @@ import { Slider } from 'antd';
 import { VerticalFlexWrapper, BoldWrapper } from '../container/styledComponent';
 
 export default function({ title, min, max, selectMin, selectMax, onChange }) {
+  const marks = { [min]: min, [max]: max };
   return (
     <VerticalFlexWrapper>
       {title && <BoldWrapper>{title}</BoldWrapper>}
@@ -14,6 +15,7 @@ export default function({ title, min, max, selectMin, selectMax, onChange }) {
         defaultValue={[selectMin, selectMax]}
         step={0.1}
         onChange={onChange}
+        marks={marks}
       />
     </VerticalFlexWrapper>
   );
