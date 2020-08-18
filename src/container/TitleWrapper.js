@@ -1,12 +1,22 @@
 import React from 'react';
 
-import { VerticalFlexWrapper, BoldWrapper } from './styledComponent';
+import {
+  HorizontalFlexWrapper,
+  VerticalFlexWrapper,
+  BoldWrapper,
+  Gap,
+} from './styledComponent';
 
-export default function(props) {
+const verticalAlign = 'vertical';
+
+export default function({ title, children, align = verticalAlign }) {
+  const Wrapper =
+    align === verticalAlign ? VerticalFlexWrapper : HorizontalFlexWrapper;
   return (
-    <VerticalFlexWrapper>
-      {props.title && <BoldWrapper>{props.title}</BoldWrapper>}
-      {props.children}
-    </VerticalFlexWrapper>
+    <Wrapper>
+      {title && <BoldWrapper>{title}</BoldWrapper>}
+      {title && align !== verticalAlign && <Gap />}
+      {children}
+    </Wrapper>
   );
 }
