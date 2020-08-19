@@ -7,6 +7,7 @@ import {
   VerticalFlexWrapper,
   BoldWrapper,
   TextWrapper,
+  MovieModalSwatchWrapper,
   Gap,
 } from '../container/styledComponent';
 
@@ -30,7 +31,9 @@ export default function MovieModal({
       onCancel={onClose}
     >
       <HorizontalFlexWrapper>
-        <MovieModalSwatch src={swatch} />
+        <MovieModalSwatchWrapper>
+          <MovieModalSwatch src={swatch} />
+        </MovieModalSwatchWrapper>
         <VerticalFlexWrapper>
           <HorizontalFlexWrapper>
             <TextWrapper>{release_date}</TextWrapper>

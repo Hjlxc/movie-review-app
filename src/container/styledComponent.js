@@ -73,8 +73,11 @@ export const MovieItemSwatch = styled.img`
   }
 `;
 
-export const MovieModalSwatch = styled.img`
-  height: 100%;
-  max-height: 300px;
+export const MovieModalSwatchWrapper = styled.div`
+  max-width: 50%;
+  min-width: 140px;
   padding-right: 10px;
+`;
+export const MovieModalSwatch = styled.img`
+  width: 100%;
 `;
