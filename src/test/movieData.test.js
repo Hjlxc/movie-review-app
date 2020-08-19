@@ -12,3 +12,9 @@ test('Test setLoading Action', () => {
   expect(setLoading(true)).toEqual(expectTrueAction);
   expect(setLoading(false)).toEqual(expectFalseAction);
 });
+
+test('Test setMovieData Action', () => {
+  const payload = ['a', 'b', 'c'];
+  const expectAction = { type: 'movieData/setMovieData', payload };
+  expect(setMovieData(payload)).toEqual(expectAction);
+});
