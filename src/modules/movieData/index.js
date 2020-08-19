@@ -10,7 +10,9 @@ export const movieDataSlice = createSlice({
   initialState,
   reducers: {
     setMovieData: (state, action) => {
-      state.data[action.payload.page - 1] = action.payload;
+      action.payload.forEach(
+        (payloadData) => (state.data[payloadData.page - 1] = payloadData)
+      );
       state.loading = false;
     },
     setLoading: (state, action) => {
@@ -21,15 +23,40 @@ export const movieDataSlice = createSlice({
 const { setMovieData, setLoading } = movieDataSlice.actions;
 
 /* Actions */
-// fetch the data of a given page, if provided
+/**
+ * Fetch movie data and update redux store
+ * @param {Object} options
+ * @param {Array[Number]|Number} options.page // either page a single page using an positive integer or multiply page with an array
+ */
 export const fetchMovieData = (options = {}) => async (dispatch, getState) => {
   const { movieData } = getState();
-  const page = options.page || 1;
-  if (movieData.data[page - 1]) return;
+  let page = options.page || 1;
+
+  // convert single page option into array
+  if (!Array.isArray(page)) page = [page];
+
+  const fetchPageIdx = [];
+
+  // valid pageValue and remove already fetched page
+  for (let pageValue of page) {
+    if (
+      Number.isNaN(pageValue) ||
+      Math.floor(pageValue) !== pageValue ||
+      pageValue < 1
+    ) {
+      throw new Error('Page must be an positive interger');
+    }
+    if (!movieData.data[pageValue - 1]) fetchPageIdx.push(pageValue);
+  }
+
+  if (!fetchPageIdx.length) return; // all the page has been fetched
+
   try {
     // fetch and update movie data state
     dispatch(setLoading(true));
-    const data = await fetchMovieFromDB(options);
+    const data = await Promise.all(
+      fetchPageIdx.map((pageIdx) => fetchMovieFromDB(pageIdx))
+    );
     return dispatch(setMovieData(data));
   } catch (e) {
     console.error(e);

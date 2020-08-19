@@ -9,12 +9,6 @@ export const fetchMovieFromDB = async (options = {}) => {
   const { page } = options;
   let endpoint = `${MOVIE_DB_ENDPOINT}?api_key=${MOVIE_DB_API_KEY}`;
 
-  if (
-    page !== undefined &&
-    (Number.isNaN(page) || Math.floor(page) !== page || page < 1)
-  )
-    throw new Error('Page must be an positive interger');
-
   if (page) endpoint += `&page=${page}`;
 
   const res = await fetch(endpoint);

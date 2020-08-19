@@ -162,14 +162,6 @@ describe('Test movieData Actions', () => {
       );
     });
 
-    it('Test fetchMovieFromDB with invalid option', async () => {
-      expect(async () => {
-        await fetchMovieFromDB({ page: 'a' }).rejects.toThrow();
-        await fetchMovieFromDB({ page: 1.1 }).rejects.toThrow();
-        await fetchMovieFromDB({ page: 0 }).rejects.toThrow();
-      });
-    });
-
     it('Test fetchMovieFromDB with valid option', async () => {
       fetch.mockResponseOnce(JSON.stringify(testDataPage_1));
       await fetchMovieFromDB({ page: 2 });
@@ -178,16 +170,41 @@ describe('Test movieData Actions', () => {
       );
     });
 
+    it('Test fetchMovieData invalid input', async () => {
+      expect(async () => {
+        await fetchMovieFromDB({ page: 'a' }).rejects.toThrow();
+        await fetchMovieFromDB({ page: 1.1 }).rejects.toThrow();
+        await fetchMovieFromDB({ page: 0 }).rejects.toThrow();
+        await fetchMovieFromDB({ page: [1, 'a'] }).rejects.toThrow();
+      });
+    });
+
     it('Test fetchMovieData return the correct action', async () => {
       fetch.mockResponseOnce(JSON.stringify(testDataPage_1));
       const store = mockStore({ movieData: initialState });
       const expectAction = {
         type: 'movieData/setMovieData',
-        payload: testDataPage_1,
+        payload: [testDataPage_1],
       };
       await expect(store.dispatch(fetchMovieData())).resolves.toEqual(
         expectAction
       );
+    });
+
+    it('Test fetchMovieData with multiply pages return the correct action', async () => {
+      fetch.mockResponses(
+        JSON.stringify(testDataPage_1),
+        JSON.stringify(testDataPage_2)
+      );
+      const store = mockStore({ movieData: initialState });
+      const expectAction = {
+        type: 'movieData/setMovieData',
+        payload: [testDataPage_1, testDataPage_2],
+      };
+      await expect(
+        store.dispatch(fetchMovieData({ page: [1, 2] }))
+      ).resolves.toEqual(expectAction);
+      expect(fetch).toHaveBeenCalledTimes(2);
     });
   });
 });
@@ -231,6 +248,19 @@ describe('Test movieData Reducers', () => {
           await store.dispatch(fetchMovieData())
         )
       ).toEqual({ data: [undefined, testDataPage_2], loading: false });
+    });
+
+    it('Test new state with setMovieData reducer with multiply pages', async () => {
+      fetch.mockResponses(
+        JSON.stringify(testDataPage_1),
+        JSON.stringify(testDataPage_2)
+      );
+      expect(
+        reducer(
+          store.getState().movieData,
+          await store.dispatch(fetchMovieData({ page: [1, 2] }))
+        )
+      ).toEqual({ data: [testDataPage_1, testDataPage_2], loading: false });
     });
   });
 });
