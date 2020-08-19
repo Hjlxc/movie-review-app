@@ -3,9 +3,11 @@ import { createSelector } from 'reselect';
 
 import { fetchMovieFromDB } from './utils';
 
+export const initialState = { data: [], loading: false };
+
 export const movieDataSlice = createSlice({
   name: 'movieData',
-  initialState: { data: [], loading: false },
+  initialState,
   reducers: {
     setMovieData: (state, action) => {
       state.data[action.payload.page - 1] = action.payload;
@@ -16,8 +18,7 @@ export const movieDataSlice = createSlice({
     },
   },
 });
-
-export const { setMovieData, setLoading } = movieDataSlice.actions;
+const { setMovieData, setLoading } = movieDataSlice.actions;
 
 /* Actions */
 // fetch the data of a given page, if provided
@@ -29,7 +30,7 @@ export const fetchMovieData = (options = {}) => async (dispatch, getState) => {
     // fetch and update movie data state
     dispatch(setLoading(true));
     const data = await fetchMovieFromDB(options);
-    dispatch(setMovieData(data));
+    return dispatch(setMovieData(data));
   } catch (e) {
     console.error(e);
     // handle fetch error, such as retry, etc
