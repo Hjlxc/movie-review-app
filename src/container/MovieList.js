@@ -18,6 +18,8 @@ import { selectFilteredMovie } from '../modules/movieFilter';
 import { MovieItem, MovieModal } from '../component';
 import { POSTER_PREFIX } from '../constants';
 
+const minMovieItemWidth = 200;
+
 export default function MovieList() {
   const bodyRef = useRef(null);
 
@@ -41,8 +43,23 @@ export default function MovieList() {
   useEffect(
     () => {
       // initial and update width property to dymanically update grid
-      setWidth(bodyRef.current.offsetWidth);
+      const { offsetWidth: width, offsetHeight: height } = bodyRef.current;
+      setWidth(width);
       window.addEventListener('resize', handleResize);
+
+      // this is a hacky way to make sure the app fetch enough data when user has a big screen
+      // the reason is because InfiniteScroll need scroll event to trigger loading more data
+      // if the initial data is not able to cover the full window, then no scroll bar will be rendered
+      // thus no scroll event will be fire so the app will not be able to load more data
+      const fetchPage = Math.ceil(
+        (Math.ceil(width / minMovieItemWidth) *
+          Math.ceil(height / minMovieItemWidth / 2)) /
+          20
+      );
+
+      dispatch(
+        fetchMovieData({ page: Array.from(Array(fetchPage), (_, i) => i + 1) })
+      );
 
       // clean the resize event listener
       return () => {
@@ -116,7 +133,8 @@ export default function MovieList() {
   );
 }
 // get gripColumn based on current window width, min item width is 200
-const getGripColumn = (width) => Math.max(Math.floor(width / 200), 1);
+const getGripColumn = (width) =>
+  Math.max(Math.floor(width / minMovieItemWidth), 1);
 
 // parse the item data to include swatch url and rating based on 5
 const parseItemData = (item) => ({

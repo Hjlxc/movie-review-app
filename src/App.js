@@ -4,7 +4,7 @@ import { MenuOutlined } from '@ant-design/icons';
 import { Drawer } from 'antd';
 
 import { Root, Header } from './container/styledComponent';
-import { fetchMovieData } from './modules/movieData';
+// import { fetchMovieData } from './modules/movieData';
 import MovieList from './container/MovieList';
 import MovieFilter from './container/MovieFilter';
 
@@ -15,10 +15,10 @@ function App() {
 
   const [showMenu, setShowMenu] = useState(false);
 
-  // useEffect with [] as second parameter to make sure only fetch movie data once
-  useEffect(() => {
-    dispatch(fetchMovieData());
-  }, []);
+  // // useEffect with [] as second parameter to make sure only fetch movie data once
+  // useEffect(() => {
+  //   dispatch(fetchMovieData());
+  // }, []);
 
   return (
     <Root>
