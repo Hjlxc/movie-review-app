@@ -5,9 +5,14 @@ import {
   movieDataSlice,
   fetchMovieData,
   initialState,
+  selectMovieData,
+  selectFirstUnfetchedPage,
+  selectHasMoreData,
+  selectLoadingMovieData,
 } from '../modules/movieData';
-import { fetchMovieFromDB } from '../modules/movieData/utils';
+import { fetchMovieFromDB, flat } from '../modules/movieData/utils';
 import { MOVIE_DB_ENDPOINT, MOVIE_DB_API_KEY } from '../constants';
+
 const { reducer } = movieDataSlice;
 const {
   setMovieData: setMovieDataAction,
@@ -18,7 +23,7 @@ const mockStore = configureMockStore([thunk]);
 
 const testDataPage_1 = {
   page: 1,
-  totalPage: 2,
+  total_pages: 2,
   results: [
     { title: 'test_title_1', overview: 'test_overview_1' },
     { title: 'test_title_2', overview: 'test_overview_2' },
@@ -27,12 +32,38 @@ const testDataPage_1 = {
 
 const testDataPage_2 = {
   page: 2,
-  totalPage: 2,
+  total_pages: 2,
   results: [
     { title: 'test_title_3', overview: 'test_overview_3' },
     { title: 'test_title_4', overview: 'test_overview_4' },
   ],
 };
+
+test('Test flat helper function', () => {
+  // no nest
+  expect(flat(['a', 'b', 1])).toEqual(['a', 'b', 1]);
+  // one level single nest
+  expect(flat(['a', ['b', 2], 1])).toEqual(['a', 'b', 2, 1]);
+  // one level with multi nest
+  expect(flat([['a', { key: 1 }], 'b', ['c', 2]])).toEqual([
+    'a',
+    { key: 1 },
+    'b',
+    'c',
+    2,
+  ]);
+  // multi level with multi nest
+  expect(flat([['a', ['b', ['c', 3], 2], 1], ['d', 4]])).toEqual([
+    'a',
+    'b',
+    'c',
+    3,
+    2,
+    1,
+    'd',
+    4,
+  ]);
+});
 
 test('Test setLoadingAction Action', () => {
   const expectTrueAction = {
@@ -98,6 +129,7 @@ describe('Test fetchMovieData Action', () => {
 test('Test setLoading Reducer', () => {
   const store = mockStore({ movieData: initialState }); // initial state has loading as false
 
+  // after calling reducer with setLoadingAction to false, the new state should have loading equal to false
   expect(reducer(store.getState().movieData, setLoadingAction(true))).toEqual({
     ...initialState,
     loading: true,
@@ -110,7 +142,7 @@ describe('Test setMovieData Reducer', () => {
     fetch.resetMocks();
     // override loading to true from initial state
     // test that after called setMovieData reducer, it will also set loading to false
-    store = mockStore({ movieData: initialState, loading: true });
+    store = mockStore({ movieData: { ...initialState, loading: true } });
   });
 
   it('Test new state with setMovieData reducer', async () => {
@@ -132,4 +164,82 @@ describe('Test setMovieData Reducer', () => {
       )
     ).toEqual({ data: [undefined, testDataPage_2], loading: false });
   });
+});
+
+describe('Test selectMovieData Selector', () => {
+  it('Should return empty array as no data available', () => {
+    const store = mockStore({ movieData: initialState });
+    expect(selectMovieData(store.getState())).toEqual([]);
+  });
+  it('Should return the results of page 1 data', () => {
+    const store = mockStore({
+      movieData: { ...initialState, data: [testDataPage_1] },
+    });
+    expect(selectMovieData(store.getState())).toEqual(testDataPage_1.results);
+  });
+  it('Should return the results of page 1 data', () => {
+    const store = mockStore({
+      movieData: { ...initialState, data: [undefined, testDataPage_2] },
+    });
+    expect(selectMovieData(store.getState())).toEqual(testDataPage_2.results);
+  });
+  it('Should return the result cancat page 1 data and page 2 data', () => {
+    const store = mockStore({
+      movieData: { ...initialState, data: [testDataPage_1, testDataPage_2] },
+    });
+    expect(selectMovieData(store.getState())).toEqual(
+      testDataPage_1.results.concat(testDataPage_2.results)
+    );
+  });
+});
+
+describe('Test selectFirstUnfetchedPage Selector', () => {
+  it('Should return 1 as no data exist', () => {
+    const store = mockStore({ movieData: initialState });
+    expect(selectFirstUnfetchedPage(store.getState())).toBe(1);
+  });
+  it('Should return 2 as first data are fetched', () => {
+    const store = mockStore({
+      movieData: { ...initialState, data: [testDataPage_1] },
+    });
+    expect(selectFirstUnfetchedPage(store.getState())).toBe(2);
+  });
+  it('Should return 1 as forst data is not fetch even second page has fetched', () => {
+    const store = mockStore({
+      movieData: { ...initialState, data: [undefined, testDataPage_2] },
+    });
+    expect(selectFirstUnfetchedPage(store.getState())).toBe(1);
+  });
+  it('Should return 3 as all the data has being fetched', () => {
+    const store = mockStore({
+      movieData: { ...initialState, data: [testDataPage_1, testDataPage_2] },
+    });
+    expect(selectFirstUnfetchedPage(store.getState())).toBe(3);
+  });
+});
+
+describe('Test selectHasMoreData Selector', () => {
+  it('Should return true as no data exist', () => {
+    const store = mockStore({ movieData: initialState });
+    expect(selectHasMoreData(store.getState())).toBeTruthy();
+  });
+  it('Should return true as not all data are fetched', () => {
+    const store = mockStore({
+      movieData: { ...initialState, data: [testDataPage_1] },
+    });
+    expect(selectHasMoreData(store.getState())).toBeTruthy();
+  });
+  it('Should return false as all the data are fetched', () => {
+    const store = mockStore({
+      movieData: { ...initialState, data: [testDataPage_1, testDataPage_2] },
+    });
+    expect(selectHasMoreData(store.getState())).toBeFalsy();
+  });
+});
+
+test('Test selectLoadingMovieData Selector', () => {
+  const store = mockStore({
+    movieData: { data: [testDataPage_1, testDataPage_2], loading: true },
+  });
+  expect(selectLoadingMovieData(store.getState())).toBeTruthy();
 });
