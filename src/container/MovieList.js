@@ -8,7 +8,12 @@ import {
   HorizontalFlexWrapper,
   CenteredWrapper,
 } from './styledComponent';
-import { fetchMovieData, selectHasMoreData } from '../modules/movieData';
+import {
+  fetchMovieData,
+  selectHasMoreData,
+  selectFirstUnfetchedPage,
+  selectLoadingMovieData,
+} from '../modules/movieData';
 import { selectFilteredMovie } from '../modules/movieFilter';
 import { MovieItem, MovieModal } from '../component';
 import { POSTER_PREFIX } from '../constants';
@@ -23,6 +28,8 @@ export default function MovieList() {
   // get movieList from redux store
   const movieList = useSelector(selectFilteredMovie);
   const hasMoreData = useSelector(selectHasMoreData);
+  const nextFetchPage = useSelector(selectFirstUnfetchedPage);
+  const loading = useSelector(selectLoadingMovieData);
   const dispatch = useDispatch();
 
   // window resize handler
@@ -63,8 +70,8 @@ export default function MovieList() {
     </List.Item>
   );
 
-  const handleInfiniteOnLoad = (loadingPage) =>
-    dispatch(fetchMovieData({ page: loadingPage + 1 }));
+  const handleInfiniteOnLoad = () =>
+    dispatch(fetchMovieData({ page: nextFetchPage }));
 
   const loader = (
     <CenteredWrapper>
@@ -83,7 +90,7 @@ export default function MovieList() {
         loadMore={handleInfiniteOnLoad}
         useWindow={false}
         hasMore={hasMore}
-        loader={loader}
+        loader={loading && loader}
       >
         {movieList.length ? (
           <List
