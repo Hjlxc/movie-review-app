@@ -26,7 +26,7 @@ function App() {
       <MenuOutlined
         style={{
           position: 'absolute',
-          left: '8px',
+          right: '8px',
           top: '8px',
           fontSize: '32px',
           color: '#fff',
@@ -37,11 +37,11 @@ function App() {
       <MovieList />
       <Drawer
         title="Movie Filter"
-        placement="left"
+        placement="right"
         closable={true}
         onClose={() => setShowMenu(false)}
         visible={showMenu}
-        key="left"
+        key="right"
       >
         <MovieFilter />
       </Drawer>
