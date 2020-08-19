@@ -13,7 +13,7 @@ export default function MovieItem({ swatch, title, rating, onClick }) {
     <MovieItemWrapper>
       <MovieItemSwatch src={swatch} onClick={onClick} />
       <BoldWrapper>{title}</BoldWrapper>
-      <Rate allowHalf disabled defaultValue={rating} />
+      <Rate allowHalf disabled value={rating} />
     </MovieItemWrapper>
   );
 }
