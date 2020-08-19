@@ -17,7 +17,7 @@ export const movieDataSlice = createSlice({
   },
 });
 
-const { setMovieData, setLoading } = movieDataSlice.actions;
+export const { setMovieData, setLoading } = movieDataSlice.actions;
 
 /* Actions */
 // fetch the data of a given page, if provided
