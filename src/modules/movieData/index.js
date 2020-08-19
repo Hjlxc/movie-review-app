@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { createSelector } from 'reselect';
 
-import { fetchMovieFromDB } from './utils';
+import { fetchMovieFromDB, flat } from './utils';
 
 export const initialState = { data: [], loading: false };
 
@@ -48,10 +48,7 @@ the reselect library will cache the result unless related store changes */
 
 // retrive the existing movie data from state and return it in order
 export const selectMovieData = createSelector(getRawMovieData, (movieData) =>
-  movieData
-    .filter((item) => !!item)
-    .map((item) => item.results)
-    .flat()
+  flat(movieData.filter((item) => !!item).map((item) => item.results))
 );
 
 // finding the first page that has not being fetched

@@ -22,3 +22,22 @@ export const fetchMovieFromDB = async (options = {}) => {
     throw new Error({ message: `Fetch Data fail with status ${res.status}` });
   return res.json();
 };
+
+/**
+ *
+ * @param {Array} nestedArray array with nested array structure
+ * the function will recursively loop and flat the nested array
+ * flat is not cross platform supported, i.e., some broswer and nodejs
+ *
+ * return an array with all the nested array flated
+ */
+export const flat = (nestedArray) => {
+  const recursivelyFlat = (subarray, target) => {
+    for (let el of subarray) {
+      // recursive flat if the element is an array, otherwise push to result
+      Array.isArray(el) ? recursivelyFlat(el, target) : target.push(el);
+    }
+    return target;
+  };
+  return recursivelyFlat(nestedArray, []);
+};
