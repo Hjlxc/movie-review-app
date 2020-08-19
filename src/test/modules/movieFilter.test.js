@@ -17,8 +17,8 @@ import {
   selectFilteredMovie,
   selectMovieSort,
   getApplyLanguageFilter,
-} from '../modules/movieFilter';
-import { initialState as movieDataIS } from '../modules/movieData';
+} from '../../modules/movieFilter';
+import { initialState as movieDataIS } from '../../modules/movieData';
 import { testDataPage_1, testDataPage_2 } from './movieData.test';
 
 const { reducer } = movieFilterSlice;

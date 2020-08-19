@@ -9,9 +9,9 @@ import {
   selectFirstUnfetchedPage,
   selectHasMoreData,
   selectLoadingMovieData,
-} from '../modules/movieData';
-import { fetchMovieFromDB, flat } from '../modules/movieData/utils';
-import { MOVIE_DB_ENDPOINT, MOVIE_DB_API_KEY } from '../constants';
+} from '../../modules/movieData';
+import { fetchMovieFromDB, flat } from '../../modules/movieData/utils';
+import { MOVIE_DB_ENDPOINT, MOVIE_DB_API_KEY } from '../../constants';
 
 const { reducer } = movieDataSlice;
 const {
