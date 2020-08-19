@@ -205,6 +205,12 @@ describe('Test movieData Actions', () => {
         store.dispatch(fetchMovieData({ page: [1, 2] }))
       ).resolves.toEqual(expectAction);
       expect(fetch).toHaveBeenCalledTimes(2);
+      expect(fetch).toHaveBeenCalledWith(
+        `${MOVIE_DB_ENDPOINT}?api_key=${MOVIE_DB_API_KEY}&page=1`
+      );
+      expect(fetch).toHaveBeenCalledWith(
+        `${MOVIE_DB_ENDPOINT}?api_key=${MOVIE_DB_API_KEY}&page=2`
+      );
     });
   });
 });
