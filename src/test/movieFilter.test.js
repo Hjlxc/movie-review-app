@@ -8,12 +8,14 @@ import {
   setMovieFilterVoting,
   setMovieFilterAdult,
   setMovieFilterSearch,
+  setMovieSort,
   selectMovieLanguage,
   selectMovieVoting,
   selectMovieAdult,
   selectMovieSearch,
   selectLanguageOption,
   selectFilteredMovie,
+  selectMovieSort,
   getApplyLanguageFilter,
 } from '../modules/movieFilter';
 import { initialState as movieDataIS } from '../modules/movieData';
@@ -50,6 +52,11 @@ describe('Test MovieFilter Actions', () => {
     const payload = 'search';
     const expectAction = { type: 'movieFilter/setSearch', payload };
     expect(store.dispatch(setMovieFilterSearch(payload))).toEqual(expectAction);
+  });
+  it('Test setMovieSort action', () => {
+    const payload = 'sort';
+    const expectAction = { type: 'movieFilter/setSort', payload };
+    expect(store.dispatch(setMovieSort(payload))).toEqual(expectAction);
   });
 });
 
@@ -131,6 +138,11 @@ describe('Test MovieFilter Reducers', () => {
       )
     ).toEqual({ ...initialState, search: 'abc' });
   });
+  it('Test setSort reducer', () => {
+    expect(
+      reducer(store.getState().movieFilter, store.dispatch(setMovieSort('abc')))
+    ).toEqual({ ...initialState, sort: 'abc' });
+  });
 });
 
 describe('Test MovieFilter Selectors', () => {
@@ -155,6 +167,10 @@ describe('Test MovieFilter Selectors', () => {
 
   it('Test selectMovieSearch Selector', () => {
     expect(selectMovieSearch(store.getState())).toEqual(initialState.search);
+  });
+
+  it('Test selectMovieSort Selector', () => {
+    expect(selectMovieSort(store.getState())).toEqual(initialState.sort);
   });
 
   describe('Test getApplyLanguageFilter Selector', () => {
@@ -330,6 +346,93 @@ describe('Test MovieFilter Selectors', () => {
           },
         });
         expect(selectFilteredMovie(store.getState()).length).toBe(1);
+      });
+    });
+
+    describe('Test sort', () => {
+      it('Should not sort as sort state is empty string', () => {
+        store = mockStore({
+          movieData,
+          movieFilter: initialState,
+        });
+        expect(selectFilteredMovie(store.getState())).toEqual(
+          testDataPage_1.results.concat(testDataPage_2.results)
+        );
+      });
+      it('Should not sort as sort state is invalid string', () => {
+        store = mockStore({
+          movieData,
+          movieFilter: { ...initialState, sort: 'abc' },
+        });
+        expect(selectFilteredMovie(store.getState())).toEqual(
+          testDataPage_1.results.concat(testDataPage_2.results)
+        );
+      });
+      it('Should Sort the movie by votiong from height to low', () => {
+        store = mockStore({
+          movieData,
+          movieFilter: { ...initialState, sort: 'Voting: High to Low' },
+        });
+        expect(selectFilteredMovie(store.getState())).toEqual(
+          testDataPage_1.results
+            .concat(testDataPage_2.results)
+            .sort((a, b) => b.vote_average - a.vote_average)
+        );
+      });
+      it('Should Sort the movie by votiong from low to height', () => {
+        store = mockStore({
+          movieData,
+          movieFilter: { ...initialState, sort: 'Voting: Low to Height' },
+        });
+        expect(selectFilteredMovie(store.getState())).toEqual(
+          testDataPage_1.results
+            .concat(testDataPage_2.results)
+            .sort((a, b) => a.vote_average - b.vote_average)
+        );
+      });
+      it('Should Sort the movie by title Alphabet with Ascending order', () => {
+        store = mockStore({
+          movieData,
+          movieFilter: { ...initialState, sort: 'Alphabetical: Ascending' },
+        });
+        expect(selectFilteredMovie(store.getState())).toEqual(
+          testDataPage_1.results
+            .concat(testDataPage_2.results)
+            .sort((a, b) => a.title.localeCompare(b.title))
+        );
+      });
+      it('Should Sort the movie by title Alphabet with Descending order', () => {
+        store = mockStore({
+          movieData,
+          movieFilter: { ...initialState, sort: 'Alphabetical: Descending' },
+        });
+        expect(selectFilteredMovie(store.getState())).toEqual(
+          testDataPage_1.results
+            .concat(testDataPage_2.results)
+            .sort((a, b) => b.title.localeCompare(a.title))
+        );
+      });
+      it('Should Sort the movie by release date from recent to old', () => {
+        store = mockStore({
+          movieData,
+          movieFilter: { ...initialState, sort: 'Release Date: Recent to Old' },
+        });
+        expect(selectFilteredMovie(store.getState())).toEqual(
+          testDataPage_1.results
+            .concat(testDataPage_2.results)
+            .sort((a, b) => new Date(b.release_date) - new Date(a.release_date))
+        );
+      });
+      it('Should Sort the movie by release date from old to recent', () => {
+        store = mockStore({
+          movieData,
+          movieFilter: { ...initialState, sort: 'Release Date: Old to Recent' },
+        });
+        expect(selectFilteredMovie(store.getState())).toEqual(
+          testDataPage_1.results
+            .concat(testDataPage_2.results)
+            .sort((a, b) => new Date(a.release_date) - new Date(b.release_date))
+        );
       });
     });
   });

@@ -3,11 +3,24 @@ import { createSelector } from 'reselect';
 
 import { selectMovieData } from '../movieData';
 
+export const sortOptions = {
+  '': () => {},
+  'Voting: High to Low': (a, b) => b.vote_average - a.vote_average,
+  'Voting: Low to Hight': (a, b) => a.vote_average - b.vote_average,
+  'Alphabetical: Ascending': (a, b) => a.title.localeCompare(b.title),
+  'Alphabetical: Descending': (a, b) => b.title.localeCompare(a.title),
+  'Release Date: Recent to Old': (a, b) =>
+    new Date(b.release_date) - new Date(a.release_date),
+  'Release Date: Old to Recent': (a, b) =>
+    new Date(a.release_date) - new Date(b.release_date),
+};
+
 export const initialState = {
   language: {}, // save the user selected language
   voting: { min: 0, max: 10, selectMin: 0, selectMax: 10 }, // save the min/max voting range
   adult: false,
   search: '',
+  sort: '',
 };
 
 export const movieFilterSlice = createSlice({
@@ -29,6 +42,9 @@ export const movieFilterSlice = createSlice({
     setSearch: (state, action) => {
       state.search = action.payload;
     },
+    setSort: (state, action) => {
+      state.sort = action.payload;
+    },
   },
 });
 
@@ -37,6 +53,7 @@ const {
   setVoting,
   setAdult,
   setSearch,
+  setSort,
 } = movieFilterSlice.actions;
 
 /* Actions */
@@ -51,6 +68,8 @@ export const setMovieFilterAdult = (adult) => (dispatch) =>
 
 export const setMovieFilterSearch = (search) => (dispatch) =>
   dispatch(setSearch(search));
+
+export const setMovieSort = (sort) => (dispatch) => dispatch(setSort(sort));
 
 /* Selectors */
 const getRawMovieFilterData = (state) => state.movieFilter;
@@ -81,8 +100,8 @@ export const selectFilteredMovie = createSelector(
   selectMovieData,
   getApplyLanguageFilter,
   (filterData, movieData, applyLanguageFilter) => {
-    const { language, voting, adult, search } = filterData;
-    return movieData.filter((data) => {
+    const { language, voting, adult, search, sort } = filterData;
+    const filteredMovieData = movieData.filter((data) => {
       // valid language
       if (applyLanguageFilter && !language[data.original_language])
         return false;
@@ -106,6 +125,9 @@ export const selectFilteredMovie = createSelector(
       }
       return true;
     });
+    if (!sort || !sortOptions[sort]) return filteredMovieData;
+
+    return filteredMovieData.sort(sortOptions[sort]);
   }
 );
 
@@ -116,5 +138,7 @@ export const selectMovieVoting = (state) => state.movieFilter.voting;
 export const selectMovieAdult = (state) => state.movieFilter.adult;
 
 export const selectMovieSearch = (state) => state.movieFilter.search;
+
+export const selectMovieSort = (state) => state.movieFilter.sort;
 
 export default movieFilterSlice.reducer;

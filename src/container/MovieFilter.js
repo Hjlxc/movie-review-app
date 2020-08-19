@@ -8,18 +8,24 @@ import {
   setMovieFilterLanguage,
   setMovieFilterAdult,
   setMovieFilterSearch,
+  setMovieSort,
   selectMovieVoting,
   selectLanguageOption,
   selectMovieLanguage,
   selectMovieAdult,
+  selectMovieSort,
+  sortOptions,
 } from '../modules/movieFilter';
 import {
   CheckboxGroup as LanguageFilter,
   Slider as VotingFilter,
   Switch as AdultFilter,
   SearchBox as SearchFilter,
+  Dropdown as SortDropdown,
 } from '../component';
 import TitleWrapper from './TitleWrapper';
+
+const sortDropdownOptions = Object.keys(sortOptions);
 
 export default function MovieFilter() {
   const dispatch = useDispatch();
@@ -29,6 +35,7 @@ export default function MovieFilter() {
   const languageOptions = useSelector(selectLanguageOption);
   const language = useSelector(selectMovieLanguage);
   const adult = useSelector(selectMovieAdult);
+  const sort = useSelector(selectMovieSort);
 
   // update redux store when search compoennt updates
   const onVotingFilterChange = ([min, max]) =>
@@ -41,6 +48,10 @@ export default function MovieFilter() {
 
   const onSearchFilterChange = (search) => {
     dispatch(setMovieFilterSearch(search));
+  };
+
+  const onSortFilterChange = (value) => {
+    dispatch(setMovieSort(value.key === 'item_0' ? '' : value.key));
   };
 
   return (
@@ -65,6 +76,12 @@ export default function MovieFilter() {
       <TitleWrapper title="Voting">
         <VotingFilter {...voting} onChange={onVotingFilterChange} />
       </TitleWrapper>
+      <Divider />
+      <SortDropdown
+        select={sort}
+        options={sortDropdownOptions}
+        onChange={onSortFilterChange}
+      />
     </VerticalFlexWrapper>
   );
 }
