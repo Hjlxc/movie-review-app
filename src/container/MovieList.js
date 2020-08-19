@@ -73,8 +73,10 @@ export default function MovieList() {
   const handleInfiniteOnLoad = () =>
     dispatch(fetchMovieData({ page: nextFetchPage }));
 
+  // add key={0} to fix the warning message about unique key
+  // https://github.com/oVirt/ovirt-web-ui/issues/562
   const loader = (
-    <CenteredWrapper>
+    <CenteredWrapper key={0}>
       <HorizontalFlexWrapper>
         <Spin style={{ marginRight: '20px' }} />
         {'loading'}
