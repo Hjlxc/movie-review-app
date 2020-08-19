@@ -3,14 +3,16 @@ import { createSelector } from 'reselect';
 
 import { selectMovieData } from '../movieData';
 
+export const initialState = {
+  language: {}, // save the user selected language
+  voting: { min: 0, max: 10, selectMin: 0, selectMax: 10 }, // save the min/max voting range
+  adult: false,
+  search: '',
+};
+
 export const movieFilterSlice = createSlice({
   name: 'movieFilter',
-  initialState: {
-    language: {}, // save the user selected language
-    voting: { min: 0, max: 10, selectMin: 0, selectMax: 10 }, // save the min/max voting range
-    adult: false,
-    search: '',
-  },
+  initialState,
   reducers: {
     setLanguage: (state, action) => {
       if (state.language[action.payload]) delete state.language[action.payload];
@@ -58,7 +60,7 @@ const getRawMovieFilterData = (state) => state.movieFilter;
 const getRawMovieLanguageData = (state) => state.movieFilter.language;
 // no language checked and all language checked should return the same result
 // so we will escape language filter when not selected
-const getApplyLanguageFilter = createSelector(
+export const getApplyLanguageFilter = createSelector(
   getRawMovieLanguageData,
   (languageData) => !!Object.keys(languageData).length
 );

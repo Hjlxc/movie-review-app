@@ -21,21 +21,85 @@ const {
 
 const mockStore = configureMockStore([thunk]);
 
-const testDataPage_1 = {
+export const testDataPage_1 = {
   page: 1,
   total_pages: 2,
   results: [
-    { title: 'test_title_1', overview: 'test_overview_1' },
-    { title: 'test_title_2', overview: 'test_overview_2' },
+    {
+      popularity: 271.572,
+      vote_count: 430,
+      video: false,
+      poster_path: '/bOKjzWDxiDkgEQznhzP4kdeAHNI.jpg',
+      id: 605116,
+      adult: false,
+      backdrop_path: '/qVygtf2vU15L2yKS4Ke44U4oMdD.jpg',
+      original_language: 'en',
+      original_title: 'The Project Power',
+      genre_ids: [28, 80, 878],
+      title: 'The Project Power',
+      vote_average: 2,
+      overview:
+        'An ex-soldier, a teen and a cop collide in New Orleans as they hunt for the source behind a dangerous new pill that grants users temporary superpowers.',
+      release_date: '2020-08-14',
+    },
+    {
+      popularity: 128.317,
+      vote_count: 86,
+      video: false,
+      poster_path: '/vFIHbiy55smzi50RmF8LQjmpGcx.jpg',
+      id: 703771,
+      adult: true,
+      backdrop_path: '/owraiceOKtSOa3t8sp3wA9K2Ox6.jpg',
+      original_language: 'ru',
+      original_title: 'Deathstroke: Knights & Dragons - The Movie',
+      genre_ids: [28, 16],
+      title: 'Deathstroke: Knights & Dragons - The Movie',
+      vote_average: 4,
+      overview:
+        "Ten years ago, Slade Wilson-aka the super-assassin called Deathstroke-made a tragic mistake and his wife and son paid a terrible price. Now, a decade later, Wilson's family is threatened once again by the murderous Jackal and the terrorists of H.IV.E. Can Deathstroke atone for the sins of the past-or will his family pay the ultimate price?",
+      release_date: '2020-08-04',
+    },
   ],
 };
 
-const testDataPage_2 = {
+export const testDataPage_2 = {
   page: 2,
   total_pages: 2,
   results: [
-    { title: 'test_title_3', overview: 'test_overview_3' },
-    { title: 'test_title_4', overview: 'test_overview_4' },
+    {
+      popularity: 106.734,
+      vote_count: 16,
+      video: false,
+      poster_path: '/5oQJ6HeNGWnEtP9Qyt5IZjuKI7j.jpg',
+      id: 726664,
+      adult: false,
+      backdrop_path: '/s7NC2kntiPB3WltWj9bnNTkoqUp.jpg',
+      original_language: 'en',
+      original_title: 'Fearless',
+      genre_ids: [16, 35],
+      title: 'Fearless',
+      vote_average: 6,
+      overview:
+        'A teen gamer is forced to level up to full-time babysitter when his favorite video game drops three superpowered infants from space into his backyard.',
+      release_date: '2020-08-14',
+    },
+    {
+      popularity: 83.948,
+      vote_count: 405,
+      video: false,
+      poster_path: '/b5XfICAvUe8beWExBz97i0Qw4Qh.jpg',
+      id: 612706,
+      adult: true,
+      backdrop_path: '/ishzDCZIv9iWfI70nv5E4ZreYUD.jpg',
+      original_language: 'fr',
+      original_title: 'Work It',
+      genre_ids: [35, 10402],
+      title: 'Work It',
+      vote_average: 8,
+      overview:
+        "A brilliant but clumsy high school senior vows to get into her late father's alma mater by transforming herself and a misfit squad into dance champions.",
+      release_date: '2020-08-07',
+    },
   ],
 };
 
