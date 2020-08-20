@@ -117,7 +117,7 @@ export default function MovieList() {
             renderItem={renderMovieItem}
             grid={{
               gutter: 10,
-              column: getGripColumn(width),
+              column: getGridColumn(width),
             }}
           />
         ) : (
@@ -133,7 +133,7 @@ export default function MovieList() {
   );
 }
 // get gripColumn based on current window width, min item width is 200
-const getGripColumn = (width) =>
+export const getGridColumn = (width) =>
   Math.max(Math.floor(width / minMovieItemWidth), 1);
 
 // parse the item data to include swatch url and rating based on 5
