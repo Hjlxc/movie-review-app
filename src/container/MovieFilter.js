@@ -77,11 +77,13 @@ export default function MovieFilter() {
         <VotingFilter {...voting} onChange={onVotingFilterChange} />
       </TitleWrapper>
       <Divider />
-      <SortDropdown
-        select={sort}
-        options={sortDropdownOptions}
-        onChange={onSortFilterChange}
-      />
+      <TitleWrapper title="Sort By:" align="horizontal">
+        <SortDropdown
+          select={sort}
+          options={sortDropdownOptions}
+          onChange={onSortFilterChange}
+        />
+      </TitleWrapper>
     </VerticalFlexWrapper>
   );
 }

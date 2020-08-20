@@ -42,6 +42,7 @@ function App() {
         onClose={() => setShowMenu(false)}
         visible={showMenu}
         key="right"
+        width={320}
       >
         <MovieFilter />
       </Drawer>

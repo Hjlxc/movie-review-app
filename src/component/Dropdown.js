@@ -15,7 +15,7 @@ export default function({ select, options, onChange }) {
   return (
     <Dropdown overlay={menu}>
       <a className="ant-dropdown-link" onClick={(e) => e.preventDefault()}>
-        {select || 'Sort by Feature'} <DownOutlined />
+        {select} <DownOutlined />
       </a>
     </Dropdown>
   );
