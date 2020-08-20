@@ -1,0 +1,122 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Test Switch Component matches snapshot 1`] = `
+<div
+  className="ant-slider ant-slider-with-marks"
+  onBlur={[Function]}
+  onFocus={[Function]}
+  onKeyDown={[Function]}
+  onMouseDown={[Function]}
+  onMouseUp={[Function]}
+  onTouchStart={[Function]}
+>
+  <div
+    className="ant-slider-rail"
+    style={Object {}}
+  />
+  <div
+    className="ant-slider-track ant-slider-track-1"
+    style={
+      Object {
+        "left": "25%",
+        "right": "auto",
+        "width": "50%",
+      }
+    }
+  />
+  <div
+    className="ant-slider-step"
+  >
+    <span
+      className="ant-slider-dot"
+      style={
+        Object {
+          "left": "0%",
+        }
+      }
+    />
+    <span
+      className="ant-slider-dot"
+      style={
+        Object {
+          "left": "100%",
+        }
+      }
+    />
+  </div>
+  <div
+    aria-disabled={false}
+    aria-valuemax={5}
+    aria-valuemin={1}
+    aria-valuenow={2}
+    className="ant-slider-handle ant-slider-handle-1"
+    onBlur={[Function]}
+    onKeyDown={[Function]}
+    onMouseDown={[Function]}
+    onMouseEnter={[Function]}
+    onMouseLeave={[Function]}
+    role="slider"
+    style={
+      Object {
+        "left": "25%",
+        "right": "auto",
+        "transform": "translateX(-50%)",
+      }
+    }
+    tabIndex={0}
+  />
+  <div
+    aria-disabled={false}
+    aria-valuemax={5}
+    aria-valuemin={1}
+    aria-valuenow={4}
+    className="ant-slider-handle ant-slider-handle-2"
+    onBlur={[Function]}
+    onKeyDown={[Function]}
+    onMouseDown={[Function]}
+    onMouseEnter={[Function]}
+    onMouseLeave={[Function]}
+    role="slider"
+    style={
+      Object {
+        "left": "75%",
+        "right": "auto",
+        "transform": "translateX(-50%)",
+      }
+    }
+    tabIndex={0}
+  />
+  <div
+    className="ant-slider-mark"
+  >
+    <span
+      className="ant-slider-mark-text"
+      onMouseDown={[Function]}
+      onTouchStart={[Function]}
+      style={
+        Object {
+          "left": "0%",
+          "msTransform": "translateX(-50%)",
+          "transform": "translateX(-50%)",
+        }
+      }
+    >
+      1
+    </span>
+    <span
+      className="ant-slider-mark-text"
+      onMouseDown={[Function]}
+      onTouchStart={[Function]}
+      style={
+        Object {
+          "left": "100%",
+          "msTransform": "translateX(-50%)",
+          "transform": "translateX(-50%)",
+        }
+      }
+    >
+      5
+    </span>
+  </div>
+</div>
+`;

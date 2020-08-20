@@ -31,4 +31,9 @@ describe('Test Switch Component', () => {
     instance.props.onChange();
     expect(mockOnChange).toHaveBeenCalledTimes(1);
   });
+
+  it('matches snapshot', () => {
+    const tree = testRenderer.toJSON();
+    expect(tree).toMatchSnapshot();
+  });
 });
