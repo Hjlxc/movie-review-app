@@ -1,0 +1,54 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`matches snapshot horizontal 1`] = `
+<div
+  className="sc-AxirZ hlnYRa"
+>
+  <div>
+    Wrapper Child
+  </div>
+</div>
+`;
+
+exports[`matches snapshot horizontal with title 1`] = `
+<div
+  className="sc-AxirZ hlnYRa"
+>
+  <div
+    className="sc-AxhUy sc-AxheI bvzwzp"
+  >
+    Wrapper Title
+  </div>
+  <div
+    className="sc-AxgMl cEDzwU"
+  />
+  <div>
+    Wrapper Child
+  </div>
+</div>
+`;
+
+exports[`matches snapshot vertical 1`] = `
+<div
+  className="sc-AxiKw jWoTjM"
+>
+  <div>
+    Wrapper Child
+  </div>
+</div>
+`;
+
+exports[`matches snapshot vertical with title 1`] = `
+<div
+  className="sc-AxiKw jWoTjM"
+>
+  <div
+    className="sc-AxhUy sc-AxheI bvzwzp"
+  >
+    Wrapper Title
+  </div>
+  <div>
+    Wrapper Child
+  </div>
+</div>
+`;
