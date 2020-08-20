@@ -1,14 +1,16 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
+import { render, fireEvent, cleanup } from '@testing-library/react';
 
 import { CheckboxGroup } from '../../component';
+
+const options = ['a', 'b', 'c'];
+const checked = { b: true, c: true };
 
 describe('Test Switch Component', () => {
   let testRenderer;
   let instance;
   const mockOnChange = jest.fn((check) => {});
-  const options = ['a', 'b', 'c'];
-  const checked = { b: true, c: true };
   beforeAll(() => {
     testRenderer = renderer.create(
       <CheckboxGroup
@@ -35,8 +37,31 @@ describe('Test Switch Component', () => {
     });
   });
 
-  it('Test onChange Function', () => {
-    instance.props.onOptionClick();
-    expect(mockOnChange).toHaveBeenCalledTimes(1);
+  it('matches snapshot', () => {
+    const tree = testRenderer.toJSON();
+    expect(tree).toMatchSnapshot();
+  });
+});
+
+describe('test user interactive', () => {
+  const mockOnChange = jest.fn();
+  beforeEach(() => {
+    cleanup();
+    mockOnChange.mockClear();
+  });
+
+  it('test user click on checkbox', () => {
+    const { getByTestId } = render(
+      <CheckboxGroup
+        options={options}
+        checked={checked}
+        onOptionClick={mockOnChange}
+      />
+    );
+    options.forEach((option, idx) => {
+      fireEvent.click(getByTestId(`checkBox-${idx}`));
+      expect(mockOnChange).toHaveBeenCalledTimes(idx + 1);
+      expect(mockOnChange).toBeCalledWith(option, checked[option]);
+    });
   });
 });

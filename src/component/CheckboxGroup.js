@@ -6,10 +6,11 @@ import { VerticalFlexWrapper } from '../container/styledComponent';
 export default function({ options, checked, onOptionClick }) {
   return (
     <VerticalFlexWrapper>
-      {options.map((option) => (
+      {options.map((option, idx) => (
         <div key={option}>
           <Checkbox
-            onChange={() => onOptionClick(option)}
+            data-testid={`checkBox-${idx}`}
+            onChange={() => onOptionClick(option, checked[option])}
             checked={checked[option]}
           >
             {option}
