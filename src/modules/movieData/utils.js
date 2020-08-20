@@ -1,4 +1,4 @@
-import { MOVIE_DB_ENDPOINT, MOVIE_DB_API_KEY } from '../../constants';
+import { MOVIE_DB_ENDPOINT } from '../../constants';
 
 /**
  * fetch movie data from data base
@@ -7,7 +7,9 @@ import { MOVIE_DB_ENDPOINT, MOVIE_DB_API_KEY } from '../../constants';
  */
 export const fetchMovieFromDB = async (options = {}) => {
   const { page } = options;
-  let endpoint = `${MOVIE_DB_ENDPOINT}?api_key=${MOVIE_DB_API_KEY}`;
+  let endpoint = `${MOVIE_DB_ENDPOINT}?api_key=${
+    process.env.REACT_APP_MOVIE_DB_API_KEY
+  }`;
 
   if (page) endpoint += `&page=${page}`;
 
