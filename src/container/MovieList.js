@@ -137,7 +137,7 @@ const getGripColumn = (width) =>
   Math.max(Math.floor(width / minMovieItemWidth), 1);
 
 // parse the item data to include swatch url and rating based on 5
-const parseItemData = (item) => ({
+export const parseItemData = (item) => ({
   ...item,
   rating: item.vote_average / 2,
   swatch: `${POSTER_PREFIX}${item.poster_path}`,

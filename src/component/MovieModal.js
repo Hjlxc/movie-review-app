@@ -32,7 +32,7 @@ export default function MovieModal({
     >
       <HorizontalFlexWrapper>
         <MovieModalSwatchWrapper>
-          <MovieModalSwatch src={swatch} />
+          <MovieModalSwatch src={swatch} alt={`${title} Poster`} />
         </MovieModalSwatchWrapper>
         <VerticalFlexWrapper>
           <HorizontalFlexWrapper>
@@ -59,18 +59,8 @@ export default function MovieModal({
 }
 
 // get color gradient based on rating
-// 0-5-10 -> red-yellow-green
-// reference: http://jsfiddle.net/dPhSg/
-const getColorGradient = (rating) => {
-  const parts = Math.round(rating > 5 ? 1 - (rating - 5) / 5 : rating / 5);
-  let color;
-  if (rating < 5) {
-    color = [255, parts, 0];
-  } else if (rating > 5) {
-    color = [parts, 255, 0];
-  } else {
-    color = [255, 255, 0];
-  }
-
-  return `rgb(${color.join(',')})`;
+// 0-10 -> red-green
+export const getColorGradient = (rating) => {
+  const ratio = rating / 10;
+  return `rgb(${255 - 255 * ratio},${255 * ratio},0)`;
 };
