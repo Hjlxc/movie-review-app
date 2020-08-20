@@ -4,19 +4,22 @@ This project implement a movie review app with React-Redux framework, that pulli
 
 ## Feature
 
-- Dynamic adjust the grid layout to fit different screen size
-- All user to review a list of movies with overall information
-- Provide detail information for each selected movie
-- Dynamic load data by using [React Infinite Scroller](https://www.npmjs.com/package/react-infinite-scroller)
-- Provide useful filter feature
-  ..1. Filter by Language
-  ..2. Filter by Voting
-  ..3. Filter for Adult Only
-  ..4. Search by Title Key Wrod
-- Provide useful sorting feature
-  ..1. Sort by Rating
-  ..2. Sort by Alphabet
-  ..3. Sort by Release data
+1. Dynamic adjust the grid layout to fit different screen size
+2. All user to review a list of movies with overall information
+3. Provide detail information for each selected movie
+4. Dynamic load data by using [React Infinite Scroller](https://www.npmjs.com/package/react-infinite-scroller)
+5. Provide useful filter feature
+
+- Filter by Language
+- Filter by Voting
+- Filter for Adult Only
+- Search by Title Key Wrod
+
+6. Provide useful sorting feature
+
+- Sort by Rating
+- Sort by Alphabet
+- Sort by Release data
 
 ## Structure
 
