@@ -11,7 +11,7 @@ import {
 export default function MovieItem({ swatch, title, rating, onClick }) {
   return (
     <MovieItemWrapper>
-      <MovieItemSwatch src={swatch} onClick={onClick} />
+      <MovieItemSwatch src={swatch} onClick={onClick} alt={`${title} Poster`} />
       <BoldWrapper>{title}</BoldWrapper>
       <Rate allowHalf disabled value={rating} />
     </MovieItemWrapper>

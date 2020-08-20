@@ -1,24 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Test Switch matches snapshot 1`] = `
-<button
-  aria-checked={true}
-  className="ant-switch ant-switch-checked"
-  data-testid="switch"
-  onClick={[Function]}
-  onKeyDown={[Function]}
-  role="switch"
-  type="button"
->
-  <div
-    className="ant-switch-handle"
-  />
-  <span
-    className="ant-switch-inner"
-  />
-</button>
-`;
-
 exports[`matches snapshot 1`] = `
 <button
   aria-checked={true}
