@@ -66,14 +66,14 @@ export default function MovieList() {
         window.removeEventListener('resize', handleResize);
       };
     },
-    [bodyRef.current]
+    [dispatch]
   );
 
   useEffect(
     () => {
       setHasMore(hasMoreData);
     },
-    [movieList]
+    [movieList, hasMoreData]
   );
 
   const renderMovieItem = (item) => (

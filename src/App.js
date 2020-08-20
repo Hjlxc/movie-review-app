@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import React, { useState } from 'react';
 import { MenuOutlined } from '@ant-design/icons';
 import { Drawer } from 'antd';
 
@@ -11,14 +10,7 @@ import MovieFilter from './container/MovieFilter';
 import 'antd/dist/antd.css';
 
 function App() {
-  const dispatch = useDispatch();
-
   const [showMenu, setShowMenu] = useState(false);
-
-  // // useEffect with [] as second parameter to make sure only fetch movie data once
-  // useEffect(() => {
-  //   dispatch(fetchMovieData());
-  // }, []);
 
   return (
     <Root>

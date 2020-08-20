@@ -14,7 +14,11 @@ export default function({ select, options, onChange }) {
 
   return (
     <Dropdown overlay={menu}>
-      <a className="ant-dropdown-link" onClick={(e) => e.preventDefault()}>
+      <a
+        className="ant-dropdown-link"
+        href="/"
+        onClick={(e) => e.preventDefault()}
+      >
         {select} <DownOutlined />
       </a>
     </Dropdown>
