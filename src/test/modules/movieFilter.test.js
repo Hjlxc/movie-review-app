@@ -19,7 +19,11 @@ import {
   getApplyLanguageFilter,
 } from '../../modules/movieFilter';
 import { initialState as movieDataIS } from '../../modules/movieData';
-import { testDataPage_1, testDataPage_2 } from './movieData.test';
+import {
+  testDataPage_1,
+  testDataPage_2,
+  testDataPage_3,
+} from './movieData.test';
 
 const { reducer } = movieFilterSlice;
 
@@ -432,6 +436,21 @@ describe('Test MovieFilter Selectors', () => {
           testDataPage_1.results
             .concat(testDataPage_2.results)
             .sort((a, b) => new Date(a.release_date) - new Date(b.release_date))
+        );
+      });
+    });
+    describe('Test remove duplicate', () => {
+      const movieDataWithDuplicate = {
+        ...movieDataIS,
+        data: [testDataPage_1, testDataPage_2, testDataPage_3],
+      };
+      it('Should remove results in data3 as it is duplicate', () => {
+        store = mockStore({
+          movieData: movieDataWithDuplicate,
+          movieFilter: initialState,
+        });
+        expect(selectFilteredMovie(store.getState())).toEqual(
+          testDataPage_1.results.concat(testDataPage_2.results)
         );
       });
     });

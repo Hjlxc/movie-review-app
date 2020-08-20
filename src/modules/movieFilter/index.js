@@ -101,7 +101,12 @@ export const selectFilteredMovie = createSelector(
   getApplyLanguageFilter,
   (filterData, movieData, applyLanguageFilter) => {
     const { language, voting, adult, search, sort } = filterData;
+    const titleSet = new Set();
     const filteredMovieData = movieData.filter((data) => {
+      //remove duplicate
+      if (titleSet.has(data.title)) return false;
+      else titleSet.add(data.title);
+
       // valid language
       if (applyLanguageFilter && !language[data.original_language])
         return false;
