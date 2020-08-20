@@ -250,6 +250,7 @@ exports[`matches snapshot 1`] = `
     />
     <a
       className="ant-dropdown-link ant-dropdown-trigger"
+      href="/"
       onClick={[Function]}
       onMouseEnter={[Function]}
       onMouseLeave={[Function]}

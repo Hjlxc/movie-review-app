@@ -3,6 +3,7 @@
 exports[`matches snapshot 1 1`] = `
 <a
   className="ant-dropdown-link ant-dropdown-trigger"
+  href="/"
   onClick={[Function]}
   onMouseEnter={[Function]}
   onMouseLeave={[Function]}
@@ -34,6 +35,7 @@ exports[`matches snapshot 1 1`] = `
 exports[`matches snapshot 2 1`] = `
 <a
   className="ant-dropdown-link ant-dropdown-trigger"
+  href="/"
   onClick={[Function]}
   onMouseEnter={[Function]}
   onMouseLeave={[Function]}
