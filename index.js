@@ -25,7 +25,7 @@ import {
   selectLoadingMovieData,
 } from './src/movieData';
 
-const modules = {
+export const modules = {
   movieFilter: {
     initialState: movieFilterIS,
     actions: {
@@ -62,4 +62,3 @@ const modules = {
 };
 
 export default store;
-export { modules };
