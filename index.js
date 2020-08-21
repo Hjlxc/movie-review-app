@@ -14,7 +14,7 @@ import {
   selectMovieAdult,
   selectMovieSearch,
   selectMovieSort,
-} from './src/modules';
+} from './src/modules/movieFilter';
 
 import {
   initialState as movieDataIS,
@@ -23,9 +23,9 @@ import {
   selectFirstUnfetchedPage,
   selectHasMoreData,
   selectLoadingMovieData,
-} from './src/movieData';
+} from './src/modules/movieData';
 
-export const modules = {
+const modules = {
   movieFilter: {
     initialState: movieFilterIS,
     actions: {
@@ -60,5 +60,5 @@ export const modules = {
     metadata: {},
   },
 };
-
 export default store;
+export { modules };
