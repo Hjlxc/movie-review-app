@@ -25,7 +25,7 @@ import {
   selectLoadingMovieData,
 } from './src/modules/movieData';
 
-import { parseItemData } from './src/container/MovieList';
+import { parseItemData } from './src/modules/movieData/utils';
 
 const modules = {
   movieFilter: {
