@@ -3,7 +3,7 @@ import renderer from 'react-test-renderer';
 
 import MovieModal, { getColorGradient } from '../../component/MovieModal';
 import { testDataPage_1 } from '../modules/movieData.test';
-import { parseItemData } from '../../container/MovieList';
+import { parseItemData } from '../../modules/movieData/utils';
 
 const data = parseItemData(testDataPage_1.results[0]);
 

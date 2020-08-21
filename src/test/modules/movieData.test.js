@@ -10,8 +10,12 @@ import {
   selectHasMoreData,
   selectLoadingMovieData,
 } from '../../modules/movieData';
-import { fetchMovieFromDB, flat } from '../../modules/movieData/utils';
-import { MOVIE_DB_ENDPOINT } from '../../constants';
+import {
+  fetchMovieFromDB,
+  flat,
+  parseItemData,
+} from '../../modules/movieData/utils';
+import { MOVIE_DB_ENDPOINT, POSTER_PREFIX } from '../../constants';
 
 const { reducer } = movieDataSlice;
 const {
@@ -169,6 +173,16 @@ test('Test flat helper function', () => {
     'd',
     4,
   ]);
+});
+
+test('test parseItemData', () => {
+  const item = testDataPage_1.results[0];
+  expect(parseItemData(testDataPage_1.results[0]).rating).toBe(
+    item.vote_average / 2
+  );
+  expect(parseItemData(testDataPage_1.results[0]).swatch).toBe(
+    `${POSTER_PREFIX}${item.poster_path}`
+  );
 });
 
 describe('Test movieData Actions', () => {

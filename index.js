@@ -25,6 +25,8 @@ import {
   selectLoadingMovieData,
 } from './src/modules/movieData';
 
+import { parseItemData } from './src/container/MovieList';
+
 const modules = {
   movieFilter: {
     initialState: movieFilterIS,
@@ -60,5 +62,9 @@ const modules = {
     metadata: {},
   },
 };
+const utils = {
+  parseItemData,
+};
+
 export default store;
-export { modules };
+export { modules, utils };

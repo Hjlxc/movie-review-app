@@ -14,9 +14,10 @@ import {
   selectFirstUnfetchedPage,
   selectLoadingMovieData,
 } from '../modules/movieData';
+import { parseItemData } from '../modules/movieData/utils';
+
 import { selectFilteredMovie } from '../modules/movieFilter';
 import { MovieItem, MovieModal } from '../component';
-import { POSTER_PREFIX } from '../constants';
 
 const minMovieItemWidth = 200;
 
@@ -135,10 +136,3 @@ export default function MovieList() {
 // get gripColumn based on current window width, min item width is 200
 export const getGridColumn = (width) =>
   Math.max(Math.floor(width / minMovieItemWidth), 1);
-
-// parse the item data to include swatch url and rating based on 5
-export const parseItemData = (item) => ({
-  ...item,
-  rating: item.vote_average / 2,
-  swatch: `${POSTER_PREFIX}${item.poster_path}`,
-});

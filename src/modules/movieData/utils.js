@@ -1,4 +1,4 @@
-import { MOVIE_DB_ENDPOINT } from '../../constants';
+import { MOVIE_DB_ENDPOINT, POSTER_PREFIX } from '../../constants';
 
 /**
  * fetch movie data from data base
@@ -37,3 +37,10 @@ export const flat = (nestedArray) => {
   };
   return recursivelyFlat(nestedArray, []);
 };
+
+// parse the item data to include swatch url and rating based on 5
+export const parseItemData = (item) => ({
+  ...item,
+  rating: item.vote_average / 2,
+  swatch: `${POSTER_PREFIX}${item.poster_path}`,
+});
