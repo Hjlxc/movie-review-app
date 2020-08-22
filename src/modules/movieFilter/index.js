@@ -4,7 +4,7 @@ import { createSelector } from 'reselect';
 import { selectMovieData } from '../movieData';
 
 export const sortOptions = {
-  '': () => {},
+  Default: () => {},
   'Voting: High to Low': (a, b) => b.vote_average - a.vote_average,
   'Voting: Low to Hight': (a, b) => a.vote_average - b.vote_average,
   'Alphabetical: Ascending': (a, b) => a.title.localeCompare(b.title),
@@ -121,7 +121,7 @@ export const selectFilteredMovie = createSelector(
       // valid adult
       if (adult && !data.adult) return false;
 
-      if (search) {
+      if (search && search !== 'Default') {
         // split by space and remove enpty string (when user mistype 2 or more space together)
         const splitSearch = search.split(' ').filter((a) => a);
         for (let word of splitSearch)

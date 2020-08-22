@@ -51,7 +51,7 @@ export default function MovieFilter() {
   };
 
   const onSortFilterChange = (value) => {
-    dispatch(setMovieSort(value.key === 'item_0' ? '' : value.key));
+    dispatch(setMovieSort(value.key === 'Default' ? '' : value.key));
   };
 
   return (
