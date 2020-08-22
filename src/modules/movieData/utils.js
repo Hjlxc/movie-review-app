@@ -6,10 +6,16 @@ import { MOVIE_DB_ENDPOINT, POSTER_PREFIX } from '../../constants';
  * @param options.page specific a certain page to load, default is page 1
  */
 export const fetchMovieFromDB = async (options = {}) => {
-  const { page } = options;
-  let endpoint = `${MOVIE_DB_ENDPOINT}?api_key=${
-    process.env.REACT_APP_MOVIE_DB_API_KEY
-  }`;
+  const { page, apiKey } = options;
+  const key = process.env.REACT_APP_MOVIE_DB_API_KEY || apiKey;
+
+  if (!key)
+    throw new Error({
+      message:
+        'API key is required. Please either add to to .env or pass it as inside options',
+    });
+
+  let endpoint = `${MOVIE_DB_ENDPOINT}?api_key=c06e14cd13b2c6373fdc8f9f3dd47eb3`;
 
   if (page) endpoint += `&page=${page}`;
 

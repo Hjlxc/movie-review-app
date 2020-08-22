@@ -55,7 +55,9 @@ export const fetchMovieData = (options = {}) => async (dispatch, getState) => {
     // fetch and update movie data state
     dispatch(setLoading(true));
     const data = await Promise.all(
-      fetchPageIdx.map((pageIdx) => fetchMovieFromDB({ page: pageIdx }))
+      fetchPageIdx.map((pageIdx) =>
+        fetchMovieFromDB({ ...options, page: pageIdx })
+      )
     );
     return dispatch(setMovieData(data));
   } catch (e) {
